@@ -40,19 +40,8 @@ spring:
     port: 5672
     username: guest
     password: guest
-  cloud:
-    bus:
-      enabled: true
-      trace:
-        enabled: true
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: bus-refresh
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:7200/eureka/
+      defaultZone: http://localhost:7100/eureka/
