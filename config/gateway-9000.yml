@@ -1,0 +1,25 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true                   # 开启服务注册和发现的功能
+          lower-case-service-id: true     # 将请求路径上的服务名配置为小写（因为服务注册的时候，向注册中心注册时将服务名转成大写的了）
+      routes:
+        - id: provider
+          uri: lb://provider-cluster-8001         # PROVIDER服务的负载均衡地址
+          predicates:
+            - Path=/provider/**                   # 将以/person/**开头的请求都会转发到uri为lb://provider的地址上
+          filters:
+            - StripPrefix=1                       # 在转发之前将 /provider 去掉
+        - id: consumer-feign-hystrix
+          uri: lb://consumer-feign-hystrix-8021   # 通过 /consumer-feign-hystrix-8021/** 也可以访问
+          predicates:
+            - Path=/consumer-feign-hystrix/**
+          filters:
+            - StripPrefix=1
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7100/eureka/
