@@ -1,0 +1,32 @@
+spring:
+  zipkin:
+    base-url: http://localhost:9411
+    discoveryClientEnabled: false
+    sender:
+      type: web
+  sleuth:
+    web:
+      client:
+        enabled: true
+    sampler:
+      probability: 1.0                # 设置Sleuth的抽样收集概率
+      percentage: 1.0
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+#Eureka配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://peer1:7001/eureka/,http://peer2:7002/eureka/
+
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  dashboard:
+    proxy-stream-allow-list: "*"
